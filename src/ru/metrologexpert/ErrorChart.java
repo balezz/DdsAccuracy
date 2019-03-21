@@ -90,7 +90,7 @@ public class ErrorChart extends Application {
             nAmp = 8 + 4 * j;                                   //  ampMax on each step
             for (int i = 0; i < N; i++) {
                 nPhase = 8 + i;                                //  phaseMax on each step
-                DDS dds = new DdsTeylor(nPhase, nAmp, 100, 35);
+                DDS dds = new DdsSimple(nPhase, nAmp, 100, 35);
                 errorArray[i][j] = dds.getError();
             }
         }

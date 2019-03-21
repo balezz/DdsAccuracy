@@ -1,15 +1,19 @@
 package ru.metrologexpert;
 
+import static java.lang.Math.PI;
+
 public class DdsSimple extends DDS {
 
     DdsSimple (int nP, int nA, int F0, int FX) {
         super(nP, nA, F0, FX);
     }
 
+
+
     void initTable() {
         table = new int[phaseMax];
         for (int i = 0; i < phaseMax; i++) {
-            table[i] = (int) Math.round( ampMax * Math.sin( (2 * pi * i) / phaseMax) );
+            table[i] = (int) Math.round( ampMax * Math.sin( (2 * PI * i) / phaseMax) );
         }
     }
 

@@ -12,8 +12,8 @@ import javafx.stage.Stage;
  */
 public class SineChart extends Application {
 
-    DDS dds = new DdsTeylor(15, 12, 1000, 12);
-    int N = dds.Fo/dds.Fx;
+    DDS dds = new DdsSimple(15, 12, 1000, 12);
+    int N = (int)(dds.fClk /dds.fOut);
 
     public static void main(String[] args) {
         launch(args); // Visualize window

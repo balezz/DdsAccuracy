@@ -12,7 +12,7 @@ import static java.lang.Math.PI;
  * <br>
  * The original Sunderland technique is based on simple trigonometric identities.
  * The phase address of the quarter of the sine wave is decomposed to
- * $\phi = a + b + y$, with the word-lengths of the variables: nPhiA, nPhiB, nPhiY.
+ * $\phiPrec = a + b + y$, with the word-lengths of the variables: nPhiA, nPhiB, nPhiY.
  * In this way the nP=12 phase bits are divided into three 4 bit fractions
  * such that $a < 1, b < 2^{-4}, y < 2^{-8}$
  * The desired sine function is given by:
@@ -32,8 +32,8 @@ public class DdsSander extends DDS {
     DdsSander(int nP, int nA, int F0, int FX) {
         phaseMax = 1 << nP;
         ampMax = 1 << nA;
-        Fo = F0;
-        Fx = FX;
+        fClk = F0;
+        fOut = FX;
         dPhi = ((double)FX)/F0;                 // приращение фазы синтезируемого сигнала
                                                 // на каждом периоде частоты стандарта
         nPhiY = nP / 3;
@@ -111,7 +111,7 @@ public class DdsSander extends DDS {
 
     /**
      * Method is divide phaseMax value into three values
-     * of a b y with capacity nA nB nY bits
+     * of a b y with capacity nAmp nB nY bits
      * @param phiInt divided phaseMax value
      * @return array of {a, b, y}
      */
