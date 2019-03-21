@@ -1,5 +1,7 @@
 package ru.metrologexpert;
 
+import static java.lang.Math.PI;
+
 /**
  * Class intended to evaluate values of
  * measurement signal and standard error
@@ -14,7 +16,7 @@ public class DdsQuad extends DDS {
     void initTable() {
         table = new int[phaseMax / 4];
         for (int i = 0; i < phaseMax / 4; i++) {
-            table[i] = (int) Math.round(ampMax * Math.sin(2 * pi * (i - 0.5) / phaseMax));
+            table[i] = (int) Math.round(ampMax * Math.sin(2 * PI * (i - 0.5) / phaseMax));
         }
     }
 

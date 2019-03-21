@@ -1,5 +1,7 @@
 package ru.metrologexpert;
 
+import static java.lang.Math.PI;
+
 public class DdsQuadSub extends DdsQuad {
     DdsQuadSub(int nP, int nA, int F0, int FX) {
         super(nP, nA, F0, FX);
@@ -9,7 +11,7 @@ public class DdsQuadSub extends DdsQuad {
     void initTable() {
         table = new int[phaseMax / 4];
         for (int i = 0; i < phaseMax / 4; i++) {
-            table[i] = (int) Math.round(ampMax * Math.sin(2 * pi * (i - 0.5) / phaseMax)) - i;
+            table[i] = (int) Math.round(ampMax * Math.sin(2 * PI * (i - 0.5) / phaseMax)) - i;
         }
     }
 

@@ -1,7 +1,25 @@
 package ru.metrologexpert;
 
+
+import static java.lang.Math.PI;
+
+/**
+* Class for modeling digital synthesis modified Sunderland architecture
+ * <br>
+ * D.A.Sunderland and others
+ * "CMOS/SOS frequency synthesizer LSI circuit for spread spectrum communication"
+ * IEEE J.Solid-State Circuits, vol. SC-19, pp. 497-505, Aug. 1984
+ * <br>
+ * The original Sunderland technique is based on simple trigonometric identities.
+ * The phase address of the quarter of the sine wave is decomposed to
+ * $\phi = a + b + y$, with the word-lengths of the variables: nPhiA, nPhiB, nPhiY.
+ * In this way the nP=12 phase bits are divided into three 4 bit fractions
+ * such that $a < 1, b < 2^{-4}, y < 2^{-8}$
+ * The desired sine function is given by:
+ * $sin(\pi/2(a+b+y)) \approx sin(\pi/2(a+b)) + cos(\pi/2(a))sin(\pi/2(y))$
+* */
 public class DdsSander extends DDS {
-    int nPhiA;                          // разрядность регистра угла альфа
+    int nPhiA;                          // digit capacity of alpha
     int nPhiB;                          // разрядность регистра угла бета
     int nPhiY;                          // разрядность регистра угла гамма
     int maxPhiA;                        // макс значение угла альфа
@@ -12,8 +30,8 @@ public class DdsSander extends DDS {
     int[][]tabAlphaGamma;               // таблица LUT для углов альфа, гамма
 
     DdsSander(int nP, int nA, int F0, int FX) {
-        phaseMax = twoPow(nP);
-        ampMax = twoPow(nA);
+        phaseMax = 1 << nP;
+        ampMax = 1 << nA;
         Fo = F0;
         Fx = FX;
         dPhi = ((double)FX)/F0;                 // приращение фазы синтезируемого сигнала
@@ -21,9 +39,9 @@ public class DdsSander extends DDS {
         nPhiY = nP / 3;
         nPhiB = nP / 3;
         nPhiA = nP - nPhiY - nPhiB - 2;
-        maxPhiA = twoPow(nPhiA);
-        maxPhiB = twoPow(nPhiB);
-        maxPhiY = twoPow(nPhiY);
+        maxPhiA = 1 << (nPhiA);
+        maxPhiB = 1 << (nPhiB);
+        maxPhiY = 1 << (nPhiY);
         this.initTable();                       // Инициализация таблицы LUT #subMethod()
         this.evalU();                           // Вычисление отсчетов +templateMethod()
         this.evalError();                       // Вычисление погрешности +templateMethod()
@@ -39,14 +57,14 @@ public class DdsSander extends DDS {
         for (int a = 0; a < maxPhiA; a++) {
             for (int b = 0; b < maxPhiB; b++) {
                 tabAlphaBeta[a][b] = (int) ( ampMax *
-                        Math.sin((2*pi * ((a<<(nPhiY+nPhiB)) + (b<<nPhiY)) / phaseMax)));
+                        Math.sin((2*PI * ((a<<(nPhiY+nPhiB)) + (b<<nPhiY)) / phaseMax)));
             }
         }
         for (int a = 0; a < maxPhiA; a++) {
             for(int y = 0; y < maxPhiY; y++) {
                 tabAlphaGamma[a][y] = (int)(ampMax *
-                        (Math.cos(2*pi * ((a<<(nPhiY+nPhiB)) + ((maxPhiB/2)<<nPhiY)) / phaseMax )) *
-                            Math.sin( (2*pi * y) / phaseMax) );
+                        (Math.cos(2*PI * ((a<<(nPhiY+nPhiB)) + ((maxPhiB/2)<<nPhiY)) / phaseMax )) *
+                            Math.sin( (2*PI * y) / phaseMax) );
             }
         }
         System.out.println("Таблицы инициализированы");
@@ -99,7 +117,7 @@ public class DdsSander extends DDS {
      */
     int[] dividePhi(int phiInt) {
         int[] aby = new int[3];
-        if (phiInt > twoPow(nPhiA + nPhiB + nPhiY)) {
+        if (phiInt > 1 << (nPhiA + nPhiB + nPhiY)) {
             System.err.print("Out of index");
             return aby;
         }
@@ -120,7 +138,7 @@ public class DdsSander extends DDS {
      * @return
      */
     int multyPhi(int[] aby) {
-        return twoPow(nPhiB + nPhiY) * aby[0] + twoPow(nPhiY) * aby[1] + aby[2];
+        return 1 << (nPhiB + nPhiY) * aby[0] + (1 << (nPhiY)) * aby[1] + aby[2];
     }
 
 }

@@ -1,14 +1,17 @@
 package ru.metrologexpert;
 
+import static java.lang.Math.*;
+
 /**
- * Абстрактный класс для модели синтезатора DDS
+ * Abstract class to modeling direct digital synthesis.
+ *
  */
 abstract class DDS {
     DDS(){}
     DDS(int nP, int nA, int F0, int FX) {
         nPhase = nP;
-        phaseMax = twoPow(nP);
-        ampMax = twoPow(nA);
+        phaseMax = 1 << nP;
+        ampMax = 1 << nA;
         Fo = F0;
         Fx = FX;
         dPhi = ((double)FX)/F0;                 // приращение фазы синтезируемого сигнала
@@ -18,7 +21,6 @@ abstract class DDS {
         this.evalError();                       // Вычисление погрешности +templateMethod()
     }
 
-    public static double pi = Math.PI;
     int Fo;                                     // Значение частоты стандарта
     int Fx;                                     // Значение синтезируемой частоты
     int nPhase;                                 // разрядность фазового аккумулятора
@@ -46,36 +48,26 @@ abstract class DDS {
         for (int i = 0; i < Fo; i++) {
             phiInt = (int)(phi * phaseMax) % phaseMax;
             U[i] = getLUT(phiInt);
-            Uref[i] = ampMax * Math.sin(2*pi*phi);
+            Uref[i] = ampMax * sin(2*PI*phi);
             phi += dPhi;
         }
     }
 
     /**
-     * Evaluate standard error
+     * Evaluate standard error,
      * error interval in [0; 1]
      */
     void evalError() {
         for (int i = 0; i < Fo; i++) {
-            error += Math.pow(Uref[i] - U[i], 2);
+            error += pow(Uref[i] - U[i], 2);
         }
-        error = Math.sqrt(error/Fo) / ampMax;
+        error = sqrt(error/Fo) / ampMax;
     }
 
     public double getError() {
         return error;
     }
 
-    static int twoPow(int power) {
-        int result = 1;
-        if(power < 0) return 0;
-        else {
-            for (int i = 0; i < power; i++) {
-                result *= 2;
-            }
-            return result;
-        }
-    }
 
     /**
      * Инициализация таблицы LUT с заданными значениями phaseMax и ampMax
