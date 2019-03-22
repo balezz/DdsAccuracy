@@ -99,7 +99,7 @@ public class ErrorChartFx extends Application {
         for (int j = 0; j < M; j++) {
             int nAmp = powInt(2, 8 + 4*j);       // delta ampMax on each step
             for (int i = 1; i < F0; i++) {
-                DdsSander dds = new DdsSander(nPhase, nAmp, N, i);
+                DDS dds = new DDS(nPhase, nAmp, N, i);
                 errorArray[i][j] = dds.getError();
             }
         }

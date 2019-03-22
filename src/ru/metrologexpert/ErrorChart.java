@@ -18,14 +18,14 @@ import java.io.PrintWriter;
  */
 public class ErrorChart extends Application {
 
-    static String file = "error.txt";                       // File name
-    static int N = 13;                                      // Number of phaseMax experiments
+    static String file = "out/error.txt";                       // File name
+    static int N = 23;                                      // Number of phaseMax experiments
     static int M = 3;                                       // Number of amp experiments
     static double[][] errorArray = new double[N][M];
 
     public static void main(String[] args) {
         evalErrorArray();
-        writeErrorFile();
+        //writeErrorFile();
         // System.exit(0);
         launch(args); // Visualize window
     }
@@ -88,9 +88,9 @@ public class ErrorChart extends Application {
         int nAmp;
         for (int j = 0; j < M; j++) {
             nAmp = 8 + 4 * j;                                   //  ampMax on each step
-            for (int i = 0; i < N; i++) {
-                nPhase = 8 + i;                                //  phaseMax on each step
-                DDS dds = new DdsSimple(nPhase, nAmp, 100, 35);
+            for (int i = 8; i < N; i++) {
+                DDS dds = new DDS(i, nAmp, 4000, 350);
+                dds.evalU();
                 errorArray[i][j] = dds.getError();
             }
         }

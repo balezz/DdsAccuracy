@@ -8,11 +8,11 @@ import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
 
 /**
- * Chart sine reference and table value
+ * Chart sine reference and LookUpTable value
  */
 public class SineChart extends Application {
 
-    DDS dds = new DdsSimple(15, 12, 1000, 12);
+    DDS dds = new DDS(15, 12, 1000, 12);
     int N = (int)(dds.fClk /dds.fOut);
 
     public static void main(String[] args) {
