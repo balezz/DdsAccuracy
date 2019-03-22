@@ -96,18 +96,4 @@ public class ErrorChart extends Application {
         }
     }
 
-    /**
-     * @param power - degree of 2
-     * @return 2 in power degree
-     */
-    static int twoPow (int power) {
-        int result = 1;
-        if(power < 0) return 0;
-        else {
-            for (int i = 0; i < power; i++) {
-                result *= 2;
-            }
-            return result;
-        }
-    }
 }

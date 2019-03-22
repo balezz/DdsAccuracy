@@ -81,7 +81,7 @@ class DDS {
         for (int i = 0; i < N_sample; i++) {
             error += pow(Uref[i] - U[i], 2);
         }
-        error = sqrt(error/ fClk) / ampMax;
+        error = sqrt(error/ N_sample) / ampMax;
     }
 
 }
