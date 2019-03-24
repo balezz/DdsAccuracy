@@ -12,10 +12,15 @@ import javafx.stage.Stage;
  */
 public class SineChart extends Application {
 
-    DDS dds = new DDS(15, 12, 1000, 12);
-    int N = (int)(dds.fClk /dds.fOut);
+    private static int[] U;
+    private static DDS dds;
+    static int N = 50;
 
     public static void main(String[] args) {
+
+        dds = new DDS(15, 12, 1000, 12);
+        dds.evalU();
+        U = dds.getU();
         launch(args); // Visualize window
     }
 
@@ -33,7 +38,7 @@ public class SineChart extends Application {
         XYChart.Series series1 = new XYChart.Series();
         series1.setName("Табличное значение синуса");
         for (int i = 0; i < N; i++) {
-            series1.getData().add(new XYChart.Data(i, dds.U[i]));
+            series1.getData().add(new XYChart.Data(i, U[i]));
         }
 
         XYChart.Series series2 = new XYChart.Series();

@@ -9,6 +9,11 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.stage.Stage;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 public class Main extends Application {
     static String file = "error.txt";                       // File name
     static double F0 = 4000;
@@ -72,6 +77,19 @@ public class Main extends Application {
                 dds.evalU();
                 errorArray[i][j] = dds.getError();
             }
+        }
+    }
+    static void writeErrorFile() {
+        try {
+            PrintWriter out = new PrintWriter(
+                    new BufferedWriter(
+                            new FileWriter(file)));
+            for (int i = 0; i < N; i++) {
+                out.println(errorArray[i][0] + ", " + errorArray[i][1] + ", " + errorArray[i][2]);
+            }
+            out.close();
+        } catch (IOException e) {
+            System.err.print("File not created");
         }
     }
 

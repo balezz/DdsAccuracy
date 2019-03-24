@@ -36,8 +36,13 @@ class DDS {
     double phiPrec;                     // Current precise value of synthesized+ signal phase, in (0; 2pi)
     double error = 0;                   // Calculated MSE of synthesis signal
     double dPhi;                        // Precise phase increment on each standard tick
-    int[] U;                            // Counting values of synthesis signal, in (0; ampMax)
-    double[] Uref;                      // Reference values of signal, need to calculate MSE
+    public int[] U;                            // Counting values of synthesis signal, in (0; ampMax)
+    public double[] Uref;                      // Reference values of signal, need to calculate MSE
+
+    public int getN_sample() {
+        return N_sample;
+    }
+
     int N_sample;
     int dPhiInt;
 
