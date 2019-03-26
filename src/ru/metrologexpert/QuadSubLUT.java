@@ -24,7 +24,7 @@ class QuadSubLUT {
         ampMax = 1 << nAmp;
         LookUpTable = new int[addrPhaseMax];
         for (int i = 0; i < addrPhaseMax; i++) {
-            LookUpTable[i] = (int) Math.round(ampMax * Math.sin(PI/2 * (i - 0.5) / addrPhaseMax)) - i;
+            LookUpTable[i] = (int) Math.round(ampMax * Math.sin(PI * 0.5 * i / addrPhaseMax)) - i;
         }
     }
 
@@ -39,16 +39,21 @@ class QuadSubLUT {
      */
     int getValue(int phiInt) {
         if ((phiInt >= 0) & (phiInt < phaseMax / 4)) {
-            return LookUpTable[phiInt];
+            int phase = phiInt;
+            return LookUpTable[phase] + phase;
         }
         if ((phiInt >= phaseMax / 4) & (phiInt < phaseMax / 2)) {
-            return LookUpTable[phaseMax / 2 - phiInt - 1];
+            int phase = phaseMax / 2 - phiInt - 1;
+            return LookUpTable[phase] + phase;
         }
         if ((phiInt >= phaseMax / 2) & (phiInt < 3 * phaseMax / 4)) {
-            return -LookUpTable[phiInt - phaseMax / 2];
+            int phase = phiInt - phaseMax / 2;
+            return - LookUpTable[phase] - phase;
         }
+
         if ((phiInt >= 3 * phaseMax / 4) & (phiInt < phaseMax)) {
-            return -LookUpTable[phaseMax - phiInt - 1];
+            int phase = phaseMax - phiInt - 1;
+            return - LookUpTable[phase] - phase;
         } else {
             System.err.println("Index out of LUT");
             return 0;

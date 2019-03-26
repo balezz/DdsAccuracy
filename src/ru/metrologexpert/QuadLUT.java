@@ -27,7 +27,7 @@ class QuadLUT {
         ampMax = 1 << nAmp;
         LookUpTable = new int[addrPhaseMax];
         for (int i = 0; i < addrPhaseMax; i++) {
-            LookUpTable[i] = (int) Math.round(ampMax * Math.sin(PI/2 * (i - 0.5) / addrPhaseMax));
+            LookUpTable[i] = (int) Math.round(ampMax * Math.sin(PI/2 * (i - 1) / addrPhaseMax));
         }
     }
 

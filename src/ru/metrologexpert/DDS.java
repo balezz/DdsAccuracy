@@ -38,11 +38,6 @@ class DDS {
     double dPhi;                        // Precise phase increment on each standard tick
     public int[] U;                            // Counting values of synthesis signal, in (0; ampMax)
     public double[] Uref;                      // Reference values of signal, need to calculate MSE
-
-    public int getN_sample() {
-        return N_sample;
-    }
-
     int N_sample;
     int dPhiInt;
 
@@ -62,7 +57,8 @@ class DDS {
      *
      * */
     final void evalU() {
-        SimpleLUT lut = new SimpleLUT(nPhase, nAmp);     // TODO: setting LUT algorithm from class argument
+        QuadSubLUT lut = new QuadSubLUT(nPhase, nAmp);     // TODO: setting LUT algorithm from class argument
+                                                            // or <Type T>
 
         U = new int[N_sample];
         Uref = new double[N_sample];
@@ -74,7 +70,6 @@ class DDS {
             Uref[i] = ampMax * sin(2 * PI * phiPrec);
             phiPrec += dPhi;
         }
-
         evalError();
     }
 

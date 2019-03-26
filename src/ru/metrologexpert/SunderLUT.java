@@ -60,7 +60,7 @@ public class SunderLUT implements ILUT {
             int a_ = i << (nPhiY + nPhiB);
             for (int j = 0; j < maxPhiB; j++) {
                 int b_ = j << nPhiY;
-                tabAlphaBeta[i][j] = (int)(ampMax * sin(2*PI * (a_ + b_) / addrPhaseMax));
+                tabAlphaBeta[i][j] = (int)(ampMax * sin(0.5*PI * (a_ + b_) / addrPhaseMax ));
             }
         }
 

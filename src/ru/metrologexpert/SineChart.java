@@ -14,11 +14,11 @@ public class SineChart extends Application {
 
     private static int[] U;
     private static DDS dds;
-    static int N = 50;
+    int N = 50;
 
     public static void main(String[] args) {
 
-        dds = new DDS(15, 12, 1000, 12);
+        dds = new DDS(15, 12, 4000, 100 );
         dds.evalU();
         U = dds.getU();
         launch(args); // Visualize window
