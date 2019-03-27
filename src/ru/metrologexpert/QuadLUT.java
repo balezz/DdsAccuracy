@@ -6,7 +6,7 @@ import static java.lang.Math.PI;
  * Class intended to evaluate values of
  * measurement signal and standard error
  */
-class QuadLUT {
+class QuadLUT extends LUT {
 
     public QuadLUT(int nPhase, int nAmp) {
         this.nPhase = nPhase;
@@ -21,7 +21,7 @@ class QuadLUT {
     int ampMax;
     int[] LookUpTable;                                // LUT = LookUpTable
 
-    void init() {
+    public void init() {
         addrPhaseMax = 1 << (nPhase - 2);
         phaseMax = 1 << nPhase;
         ampMax = 1 << nAmp;
@@ -38,7 +38,7 @@ class QuadLUT {
      * @return int value of sin(phiInt) in [0; ampMax]
      * TODO: clear indexing of LookUpTable[i]
      */
-    int getValue(int phiInt) {
+    public int getValue(int phiInt) {
         if ((phiInt >= 0) & (phiInt < phaseMax / 4)) {
             return LookUpTable[phiInt];
         }

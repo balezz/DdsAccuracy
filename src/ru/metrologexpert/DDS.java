@@ -11,20 +11,7 @@ import static java.lang.Math.*;
  * initLUT() and getLut() are subMethod and depending onto synthesizer realisation.
  *
  */
-class DDS {
-    DDS(int nP, int nAmp, double fClk, double fOut) {
-        this.nPhase = nP;
-        this.nAmp = nAmp;
-        this.fClk = fClk;
-        this.fOut = fOut;
-
-        phaseMax = 1 << nPhase;         // Phase accumulator max value
-        ampMax = 1 << nAmp;
-        dPhi = fOut / fClk;             // TODO: check if  fOut > fClk/2 -> oversampling
-        dPhiInt = (int) round(phaseMax * (fOut / fClk));
-        N_sample = (int)fClk;           // time loop = 1 sec, so N_sample = fClk
-
-    }
+class DDS{
 
     double fClk;                        // Standard clock frequency value
     double fOut;                        // Synthesis frequency value
@@ -40,6 +27,22 @@ class DDS {
     public double[] Uref;                      // Reference values of signal, need to calculate MSE
     int N_sample;
     int dPhiInt;
+    LUT lut;
+
+    public DDS(int nP, int nAmp, double fClk, double fOut) {
+        this.nPhase = nP;
+        this.nAmp = nAmp;
+        this.fClk = fClk;
+        this.fOut = fOut;
+
+        phaseMax = 1 << nPhase;                 // Phase accumulator max value
+        ampMax = 1 << nAmp;
+        dPhi = fOut / fClk;                     // TODO: check if  fOut > fClk/2 -> oversampling
+        dPhiInt = (int) round(phaseMax * (fOut / fClk));
+        N_sample = (int)fClk;                   // time loop = 1 sec, so N_sample = fClk
+        lut = new LutFactory().createLUT("QuadLUT", nPhase, nAmp);     // TODO: setting LUT algorithm from class argument
+                                                            // or <Type T>
+    }
 
 
     public int[] getU() {
@@ -57,8 +60,7 @@ class DDS {
      *
      * */
     final void evalU() {
-        QuadSubLUT lut = new QuadSubLUT(nPhase, nAmp);     // TODO: setting LUT algorithm from class argument
-                                                            // or <Type T>
+
 
         U = new int[N_sample];
         Uref = new double[N_sample];

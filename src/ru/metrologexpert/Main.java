@@ -68,12 +68,13 @@ public class Main extends Application {
         launch(args);
     }
     static void evalErrorArray() {
-        int nPhase;
+        int nPhase = 12;
         int nAmp;
+        double fClk = 4000;
         for (int j = 0; j < M; j++) {
             nAmp = 8 + 4 * j;                                   //  ampMax on each step
             for (int i = 0; i < N; i++) {
-                DDS dds = new DDS(12, nAmp, 4000, i);
+                DDS dds = new DDS(nPhase, nAmp, fClk, i);
                 dds.evalU();
                 errorArray[i][j] = dds.getError();
             }

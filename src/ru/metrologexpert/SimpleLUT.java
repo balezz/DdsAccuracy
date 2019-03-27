@@ -2,7 +2,7 @@ package ru.metrologexpert;
 
 import static java.lang.Math.PI;
 
-class SimpleLUT {
+class SimpleLUT extends LUT {
 
     public SimpleLUT(int nPhase, int nAmp) {
         this.nPhase = nPhase;

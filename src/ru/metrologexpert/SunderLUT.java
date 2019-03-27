@@ -18,7 +18,7 @@ import static java.lang.Math.*;
  * The desired sine function is given by:
  * $sin(\pi/2(a+b+y)) \approx sin(\pi/2(a+b)) + cos(\pi/2(a))sin(\pi/2(y))$
 */
-public class SunderLUT implements ILUT {
+public class SunderLUT extends LUT {
     int nPhase;                                 // Phase accumulator digit capacity
     int addrPhaseMax;                           // LUT address max value
     int phaseMax;                               // External address max value
@@ -34,7 +34,7 @@ public class SunderLUT implements ILUT {
     int[][] tabAlphaBeta;                       // Look Up Table for sin(PI/2(a+b))
     int[][]tabAlphaGamma;                       // Look Up Table for cos(PI/2(a+b_mean))*sin(PI/2(y))
 
-    SunderLUT(int nP, int nA) {
+    public SunderLUT(int nP, int nA) {
         this.nPhase = nP;
         this.nAmp = nA;
         this.init();

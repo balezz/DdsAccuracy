@@ -2,7 +2,7 @@ package ru.metrologexpert;
 
 import static java.lang.Math.PI;
 
-class QuadSubLUT {
+class QuadSubLUT extends LUT {
 
 
     public QuadSubLUT(int nPhase, int nAmp) {
