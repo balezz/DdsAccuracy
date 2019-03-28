@@ -11,7 +11,7 @@ import static java.lang.Math.*;
  * initLUT() and getLut() are subMethod and depending onto synthesizer realisation.
  *
  */
-class DDS{
+public class DDS{
 
     double fClk;                        // Standard clock frequency value
     double fOut;                        // Synthesis frequency value
@@ -40,8 +40,7 @@ class DDS{
         dPhi = fOut / fClk;                     // TODO: check if  fOut > fClk/2 -> oversampling
         dPhiInt = (int) round(phaseMax * (fOut / fClk));
         N_sample = (int)fClk;                   // time loop = 1 sec, so N_sample = fClk
-        lut = new LutFactory().createLUT("QuadLUT", nPhase, nAmp);     // TODO: setting LUT algorithm from class argument
-                                                            // or <Type T>
+        lut = new LutFactory().createLUT("QuadLUT", nPhase, nAmp);
     }
 
 
@@ -59,7 +58,7 @@ class DDS{
      * Evaluate N_sample values. <br>
      *
      * */
-    final void evalU() {
+    public final void evalU() {
 
 
         U = new int[N_sample];

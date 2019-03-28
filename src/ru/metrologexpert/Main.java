@@ -2,12 +2,13 @@ package ru.metrologexpert;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import ru.metrologexpert.view.Controller;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -15,83 +16,47 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class Main extends Application {
-    static String file = "error.txt";                       // File name
-    static double F0 = 4000;
-    static double N = F0/3;                                      // Number of phaseMax experiments
-    static int M = 3;                                       // Number of amp experiments
-    static double[][] errorArray = new double[(int)F0][M];
+    private Stage primaryStage;
+    private BorderPane rootLayout;
 
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("mainApp.fxml"));
-        primaryStage.setTitle("Direct Digital Synthesis");
-        primaryStage.setScene(new Scene(root, 300, 275));
-        primaryStage.show();
-        primaryStage.setTitle("Error Sine Chart Sample");
-        final NumberAxis xAxis = new NumberAxis();
-        final NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Синтезируемая частота");
-        final LineChart<Number, Number> lineChart =
-                new LineChart<Number, Number>(xAxis, yAxis);
-        lineChart.setTitle("Зависимость СКО от синтезируемой частоты");
-        lineChart.setCreateSymbols(false);
-        XYChart.Series series1 = new XYChart.Series();
-        series1.setName("АЦП 8 бит");
+    public void start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+        this.primaryStage.setTitle("Direct Digital Synthesis");
 
-        for (int i = 0; i < N; i++) {
-            series1.getData().add(new XYChart.Data(i, errorArray[i][0]));
-        }
-        XYChart.Series series2 = new XYChart.Series();
-        series2.setName("АЦП 12 бит");
-
-        for (int i = 0; i < N; i++) {
-            series2.getData().add(new XYChart.Data(i, errorArray[i][1]));
-        }
-        XYChart.Series series3 = new XYChart.Series();
-        series3.setName("АЦП 16 бит");
-
-        for (int i = 0; i < N; i++) {
-            series3.getData().add(new XYChart.Data(i, errorArray[i][2]));
-        }
-
-        Scene scene = new Scene(lineChart, 800, 600);
-        lineChart.getData().addAll(series1, series2, series3);
-
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        initRootLayout();
 
     }
-
 
     public static void main(String[] args) {
         launch(args);
     }
-    static void evalErrorArray() {
-        int nPhase = 12;
-        int nAmp;
-        double fClk = 4000;
-        for (int j = 0; j < M; j++) {
-            nAmp = 8 + 4 * j;                                   //  ampMax on each step
-            for (int i = 0; i < N; i++) {
-                DDS dds = new DDS(nPhase, nAmp, fClk, i);
-                dds.evalU();
-                errorArray[i][j] = dds.getError();
-            }
+
+    void initRootLayout() {
+        try {
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("view/rootLayout.fxml"));
+            rootLayout = (BorderPane) loader.load();
+
+            Scene scene = new Scene(rootLayout);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+            showSineChart();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-    static void writeErrorFile() {
-        try {
-            PrintWriter out = new PrintWriter(
-                    new BufferedWriter(
-                            new FileWriter(file)));
-            for (int i = 0; i < N; i++) {
-                out.println(errorArray[i][0] + ", " + errorArray[i][1] + ", " + errorArray[i][2]);
-            }
-            out.close();
-        } catch (IOException e) {
-            System.err.print("File not created");
-        }
+
+    public void showSineChart() {
+        Controller controller = new Controller();
+        controller.setMainApp(this);
+        controller.drawSineChart();
+        LineChart lineChart = controller.getLineChart();
+        rootLayout.setCenter(lineChart);
     }
 
 }
