@@ -54,19 +54,19 @@ public class Controller {
         lineChart.setCreateSymbols(false);
 
         XYChart.Series series1 = new XYChart.Series();
-        series1.setName("АЦП 8 бит");
+        series1.setName("DAC 8bit");
 
         for (int i = 0; i < N; i++) {
             series1.getData().add(new XYChart.Data(i, errorArray[i][0]));
         }
         XYChart.Series series2 = new XYChart.Series();
-        series2.setName("АЦП 12 бит");
+        series2.setName("DAC 12bit");
 
         for (int i = 0; i < N; i++) {
             series2.getData().add(new XYChart.Data(i, errorArray[i][1]));
         }
         XYChart.Series series3 = new XYChart.Series();
-        series3.setName("АЦП 16 бит");
+        series3.setName("DAC 16bit");
 
         for (int i = 0; i < N; i++) {
             series3.getData().add(new XYChart.Data(i, errorArray[i][2]));

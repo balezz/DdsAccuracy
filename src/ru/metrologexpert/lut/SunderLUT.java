@@ -1,4 +1,4 @@
-package ru.metrologexpert;
+package ru.metrologexpert.lut;
 
 
 import static java.lang.Math.*;
@@ -20,7 +20,7 @@ import static java.lang.Math.*;
 */
 public class SunderLUT extends LUT {
     int nPhase;                                 // Phase accumulator digit capacity
-    int addrPhaseMax;                           // LUT address max value
+    int addrPhaseMax;                           // lut address max value
     int phaseMax;                               // External address max value
     int nAmp;                                   // Synthesis signal amplitude digit capacity
     int ampMax;
@@ -73,7 +73,7 @@ public class SunderLUT extends LUT {
                         sin((2 * PI * k) / addrPhaseMax));
             }
         }
-        // System.err.println("LUT initialized");
+        // System.err.println("lut initialized");
     }
 
 
@@ -91,16 +91,16 @@ public class SunderLUT extends LUT {
         if ((phiInt >= 3 * phaseMax / 4) & (phiInt < phaseMax)) {
             return - lutAdapter(phaseMax - phiInt - 1);
         } else {
-            System.err.println("Index out of LUT");
+            System.err.println("Index out of lut");
             return 0;
         }
     }
 
 
     /**
-     * adapter allows invoke LUT by simple int index
+     * adapter allows invoke lut by simple int index
      * function returns value of sin(x) from tabAlphaBeta[][] and tabAlphaGamma[][] array
-     * @param phiInt index of LUT in [0; nPhi]
+     * @param phiInt index of lut in [0; nPhi]
      * @return int value of sin(phiInt) in [0; ampMax]
      */
     int lutAdapter(int phiInt) {
@@ -108,7 +108,7 @@ public class SunderLUT extends LUT {
             aby = dividePhi(phiInt);
             return tabAlphaBeta[aby[0]][aby[1]] + tabAlphaGamma[aby[0]][aby[2]];
         } else {
-            System.err.println("Index out of LUT");
+            System.err.println("Index out of lut");
             return 0;
         }
     }

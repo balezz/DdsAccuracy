@@ -4,20 +4,17 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import ru.metrologexpert.view.Controller;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class Main extends Application {
     private Stage primaryStage;
-    private BorderPane rootLayout;
+    private AnchorPane rootLayout;
 
 
     @Override
@@ -38,7 +35,7 @@ public class Main extends Application {
 
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("view/rootLayout.fxml"));
-            rootLayout = (BorderPane) loader.load();
+            rootLayout = (AnchorPane) loader.load();
 
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
@@ -56,7 +53,7 @@ public class Main extends Application {
         controller.setMainApp(this);
         controller.drawSineChart();
         LineChart lineChart = controller.getLineChart();
-        rootLayout.setCenter(lineChart);
+        rootLayout.getChildren().add(lineChart);
     }
 
 }

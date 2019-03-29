@@ -1,4 +1,4 @@
-package ru.metrologexpert;
+package ru.metrologexpert.lut;
 
 import static java.lang.Math.PI;
 
@@ -11,10 +11,10 @@ class SimpleLUT extends LUT {
     }
 
     int nPhase;                                       // Phase accumulator digit capacity
-    int addrPhaseMax;                                 // LUT address max value
+    int addrPhaseMax;                                 // lut address max value
     int nAmp;                                         // Synthesis signal amplitude digit capacity
     int ampMax;
-    int[] LookUpTable;                                // LUT = LookUpTable
+    int[] LookUpTable;                                // lut = LookUpTable
 
 
     final void init() {
@@ -26,7 +26,7 @@ class SimpleLUT extends LUT {
         }
     }
 
-    int getValue(int phiInt) {
+    public int getValue(int phiInt) {
             return LookUpTable[phiInt];
     }
 

@@ -1,5 +1,8 @@
 package ru.metrologexpert;
 
+import ru.metrologexpert.lut.LUT;
+import ru.metrologexpert.lut.LutFactory;
+
 import static java.lang.Math.*;
 
 /**

@@ -1,4 +1,4 @@
-package ru.metrologexpert;
+package ru.metrologexpert.lut;
 
 import static java.lang.Math.PI;
 
@@ -15,11 +15,11 @@ class QuadLUT extends LUT {
     }
 
     int nPhase;                                       // Phase accumulator digit capacity
-    int addrPhaseMax;                                 // LUT internal address max value
+    int addrPhaseMax;                                 // lut internal address max value
     int phaseMax;                                     // external address max value
     int nAmp;                                         // Synthesis signal amplitude digit capacity
     int ampMax;
-    int[] LookUpTable;                                // LUT = LookUpTable
+    int[] LookUpTable;                                // lut = LookUpTable
 
     public void init() {
         addrPhaseMax = 1 << (nPhase - 2);
@@ -34,7 +34,7 @@ class QuadLUT extends LUT {
     /**
      * function returns value of sin(x) from LookUpTable[] array pi/2
      *
-     * @param phiInt index of LUT in [0; nPhi]
+     * @param phiInt index of lut in [0; nPhi]
      * @return int value of sin(phiInt) in [0; ampMax]
      * TODO: clear indexing of LookUpTable[i]
      */
@@ -51,7 +51,7 @@ class QuadLUT extends LUT {
         if ((phiInt >= 3 * phaseMax / 4) & (phiInt < phaseMax)) {
             return -LookUpTable[phaseMax - phiInt - 1];
         } else {
-            System.err.println("Index out of LUT");
+            System.err.println("Index out of lut");
             return 0;
         }
     }

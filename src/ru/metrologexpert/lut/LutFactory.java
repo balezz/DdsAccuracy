@@ -1,7 +1,8 @@
-package ru.metrologexpert;
+package ru.metrologexpert.lut;
 
 public class LutFactory {
-    LUT createLUT(String name, int nPhase, int nAmp) {
+
+    public LUT createLUT(String name, int nPhase, int nAmp) {
         if (name == "QuadLUT") {
             return new QuadLUT(nPhase, nAmp);
         }
