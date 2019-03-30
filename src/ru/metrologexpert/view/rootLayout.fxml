@@ -1,6 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.201" xmlns:fx="http://javafx.com/fxml/1" />
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.201" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.metrologexpert.view.Controller">
+   <children>
+      <GridPane alignment="CENTER" prefHeight="800.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="493.0" minWidth="10.0" prefWidth="335.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="392.0" minHeight="10.0" prefHeight="392.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="378.0" minHeight="10.0" prefHeight="302.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <LineChart>
+              <xAxis>
+                <NumberAxis side="BOTTOM" fx:id="xAxis0" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis fx:id="yAxis0" side="LEFT" />
+              </yAxis>
+            </LineChart>
+            <LineChart fx:id="lineChart" GridPane.rowIndex="1">
+              <xAxis>
+                <NumberAxis side="BOTTOM" fx:id="xAxis1" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis fx:id="yAxis1" side="LEFT" />
+              </yAxis>
+            </LineChart>
+            <LineChart prefHeight="392.0" prefWidth="533.0" GridPane.columnIndex="1">
+              <xAxis>
+                <NumberAxis side="BOTTOM" fx:id="xAxis2" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis fx:id="yAxis2" side="LEFT" />
+              </yAxis>
+            </LineChart>
+            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button minWidth="-Infinity" mnemonicParsing="false" prefHeight="42.0" prefWidth="160.0" text="Save to file" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Slider max="32.0" min="8.0" prefHeight="0.0" prefWidth="718.0" value="8.0" GridPane.valignment="BOTTOM" />
+                  <TextField alignment="CENTER" text="Разрядность ЦАП" GridPane.valignment="CENTER">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </GridPane>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

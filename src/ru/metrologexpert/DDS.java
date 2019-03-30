@@ -43,7 +43,7 @@ public class DDS{
         dPhi = fOut / fClk;                     // TODO: check if  fOut > fClk/2 -> oversampling
         dPhiInt = (int) round(phaseMax * (fOut / fClk));
         N_sample = (int)fClk;                   // time loop = 1 sec, so N_sample = fClk
-        lut = new LutFactory().createLUT("QuadLUT", nPhase, nAmp);
+        lut = new LutFactory().createLUT("SimpleLUT", nPhase, nAmp);
     }
 
 

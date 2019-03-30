@@ -1,11 +1,9 @@
 package ru.metrologexpert.view;
 
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.*;
 
 import ru.metrologexpert.DDS;
 import ru.metrologexpert.Main;
@@ -18,40 +16,60 @@ import java.io.PrintWriter;
 public class Controller {
 
     @FXML
-    private Button generate;
-
-    public LineChart getLineChart() {
-        return lineChart;
-    }
+    private LineChart lineChart;
 
     @FXML
-    private LineChart lineChart;
+    private NumberAxis xAxis0;
+
+    @FXML
+    private NumberAxis yAxis0;
+
+    @FXML
+    private NumberAxis xAxis1;
+
+    @FXML
+    private NumberAxis yAxis1;
+
+    @FXML
+    private NumberAxis xAxis2;
+
+    @FXML
+    private NumberAxis yAxis2;
 
     private Main mainApp;
 
-
-    static String file = "error.txt";                       // File name
-    static double F0 = 4000;
-    static double N = F0/3;                                 // Number of phaseMax experiments
-    static int M = 3;                                       // Number of amp experiments
-    static double[][] errorArray = new double[(int)F0][M];
+    String file = "error.txt";                       // File name
+    double F0 = 4000;
+    double N = F0/3;                                 // Number of phaseMax experiments
+    int M = 3;                                       // Number of amp experiments
+    double[][] errorArray = new double[(int) F0][M];
 
     public void setMainApp(Main main) {
         this.mainApp = main;
 
     }
 
+    public Controller() {}
+
+    @FXML
+    private void initialize() {
+
+    }
+
+    public LineChart getLineChart() {
+        return lineChart;
+    }
+
+    public void initLineChart() {
+
+        lineChart.setCreateSymbols(false);
+    }
+
     public void drawSineChart() {
 
         evalErrorArray();
 
-        final NumberAxis xAxis = new NumberAxis();
-        final NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Синтезируемая частота");
-
-        lineChart = new LineChart<Number, Number>(xAxis, yAxis);
-        lineChart.setTitle("Зависимость СКО от синтезируемой частоты");
-        lineChart.setCreateSymbols(false);
+        initLineChart();
 
         XYChart.Series series1 = new XYChart.Series();
         series1.setName("DAC 8bit");
@@ -71,7 +89,7 @@ public class Controller {
         for (int i = 0; i < N; i++) {
             series3.getData().add(new XYChart.Data(i, errorArray[i][2]));
         }
-        lineChart.getData().addAll(series1, series2, series3);
+        lineChart.getData().addAll(series1);
 
 
     }
