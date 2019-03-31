@@ -16,7 +16,13 @@ import java.io.PrintWriter;
 public class Controller {
 
     @FXML
-    private LineChart lineChart;
+    private LineChart lineChart0;
+
+    @FXML
+    private LineChart lineChart1;
+
+    @FXML
+    private LineChart lineChart2;
 
     @FXML
     private NumberAxis xAxis0;
@@ -38,87 +44,118 @@ public class Controller {
 
     private Main mainApp;
 
-    String file = "error.txt";                       // File name
-    double F0 = 4000;
-    double N = F0/3;                                 // Number of phaseMax experiments
-    int M = 3;                                       // Number of amp experiments
-    double[][] errorArray = new double[(int) F0][M];
+    private DDS dds;
+
+    private static final String FILE_NAME = "error.txt";
+    static final double F0 = 4000;
+    private int N = (int) F0 / 3;                                 // Number of phaseMax experiments
+
+    private double[] errorArray = new double[N];
+    private int[] U = new int[N];
+
+    /********************************* Constructors ************************/
+
+    public Controller() { }
+
+
+    /********************************** Methods ****************************/
 
     public void setMainApp(Main main) {
         this.mainApp = main;
-
     }
-
-    public Controller() {}
 
     @FXML
     private void initialize() {
-
     }
 
-    public LineChart getLineChart() {
-        return lineChart;
-    }
+    public void drawLineChart0() {
 
-    public void initLineChart() {
+        lineChart2.setCreateSymbols(false);
 
-        lineChart.setCreateSymbols(false);
-    }
-
-    public void drawSineChart() {
-
-        evalErrorArray();
-
-        initLineChart();
+        evalErrorFrequency();
 
         XYChart.Series series1 = new XYChart.Series();
-        series1.setName("DAC 8bit");
+//        series1.setName("DAC 8bit");
 
         for (int i = 0; i < N; i++) {
-            series1.getData().add(new XYChart.Data(i, errorArray[i][0]));
+            series1.getData().add(new XYChart.Data(i, errorArray[i]));
         }
-        XYChart.Series series2 = new XYChart.Series();
-        series2.setName("DAC 12bit");
 
-        for (int i = 0; i < N; i++) {
-            series2.getData().add(new XYChart.Data(i, errorArray[i][1]));
-        }
-        XYChart.Series series3 = new XYChart.Series();
-        series3.setName("DAC 16bit");
-
-        for (int i = 0; i < N; i++) {
-            series3.getData().add(new XYChart.Data(i, errorArray[i][2]));
-        }
-        lineChart.getData().addAll(series1);
-
+        lineChart2.getData().addAll(series1);
 
     }
 
-    void evalErrorArray() {
+    public void drawLineChart1() {
+
+        initialize();
+
+        evalErrorFrequency();
+
+        XYChart.Series series1 = new XYChart.Series();
+//        series1.setName("DAC 8bit");
+
+        for (int i = 0; i < N; i++) {
+            series1.getData().add(new XYChart.Data(i, errorArray[i]));
+        }
+
+        lineChart2.getData().addAll(series1);
+
+    }
+
+    public void drawLineChart2() {
+
+        lineChart2.setCreateSymbols(false);
+
+        evalErrorFrequency();
+
+        XYChart.Series series1 = new XYChart.Series();
+//        series1.setName("DAC 8bit");
+
+        for (int i = 0; i < N; i++) {
+            series1.getData().add(new XYChart.Data(i, errorArray[i]));
+        }
+
+        lineChart2.getData().addAll(series1);
+
+    }
+
+    void evalErrorFrequency() {
         int nPhase = 12;
         int nAmp;
         double fClk = 4000;
-        for (int j = 0; j < M; j++) {
-            nAmp = 8 + 4 * j;                                   //  ampMax on each step
-            for (int i = 0; i < N; i++) {
-                DDS dds = new DDS(nPhase, nAmp, fClk, i);
-                dds.evalU();
-                errorArray[i][j] = dds.getError();
-            }
+        nAmp = 8;                                   //  ampMax on each step
+        for (int i = 0; i < N; i++) {
+            DDS dds = new DDS(nPhase, nAmp, fClk, i);
+            dds.evalU();
+            errorArray[i] = dds.getMse();
         }
     }
 
-    void writeErrorFile() {
+//    todo
+    void evalSine() {
+        dds = new DDS(8, 8, 4000, N);
+        dds.evalU();
+        U = dds.getU();
+    }
+
+//    todo
+    void evalErrorCapacity() {
+
+    }
+
+//    todo: bind to button
+    void writeFile() {
         try {
             PrintWriter out = new PrintWriter(
                     new BufferedWriter(
-                            new FileWriter(file)));
+                            new FileWriter(FILE_NAME)));
             for (int i = 0; i < N; i++) {
-                out.println(errorArray[i][0] + ", " + errorArray[i][1] + ", " + errorArray[i][2]);
+                out.println(errorArray[i]);
             }
             out.close();
         } catch (IOException e) {
             System.err.print("File not created");
         }
     }
+
 }

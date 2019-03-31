@@ -3,7 +3,6 @@ package ru.metrologexpert;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.chart.LineChart;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import ru.metrologexpert.view.Controller;
@@ -19,7 +18,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Direct Digital Synthesis");
+        this.primaryStage.setTitle("Модель цифрового синтезатора частоты");
 
         initRootLayout();
 
@@ -39,7 +38,7 @@ public class Main extends Application {
             controller = loader.getController();
             controller.setMainApp(this);
 
-            controller.drawSineChart();
+            controller.drawLineChart2();
 
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);

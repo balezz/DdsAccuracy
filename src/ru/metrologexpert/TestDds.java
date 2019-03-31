@@ -6,14 +6,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 
-public class InitTest {
+public class TestDds {
 
     public static String FILE_NAME = "out/error.csv";
     double[] errorArray = new double[20];
 
 
     public static void main(String args[]) {
-        InitTest initTest = new InitTest();
+        TestDds initTest = new TestDds();
         initTest.printDdsSample();
         initTest.evalErrorArray();
         initTest.writeErrorFile();
@@ -22,7 +22,7 @@ public class InitTest {
     void printDdsSample() {
         DDS dds = new DDS(16, 8, 4000, 100);
         dds.evalU();
-        double error = dds.getError();
+        double error = dds.getMse();
         System.out.println(Arrays.toString(dds.getU()));
         System.out.println("Error = " + error);
     }
@@ -31,7 +31,7 @@ public class InitTest {
         for(int i = 8; i <20; i++){
             DDS dds = new DDS(i, 8, 4000, 100);
             dds.evalU();
-            errorArray[i] = dds.getError();
+            errorArray[i] = dds.getMse();
         }
     }
 
