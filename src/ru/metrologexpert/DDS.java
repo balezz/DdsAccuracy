@@ -34,7 +34,7 @@ public class DDS{
         phaseMax = 1 << nPhase;                 // Phase accumulator max value
         ampMax = 1 << nAmp;                     // Amplitude max value
 
-        dPhiPrec = fOut / fClk;                     // TODO: check if  fOut > fClk/2 -> oversampling
+        dPhiPrec = fOut / fClk;
         dPhiInt = (int) round(phaseMax * (fOut / fClk));
         N_sample = (int)fClk;                   // time loop = 1 sec, so N_sample = fClk
         lut = new LutFactory().createLUT(lutType, nPhase, nAmp);

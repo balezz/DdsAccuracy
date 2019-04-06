@@ -2,20 +2,19 @@ package ru.metrologexpert.view;
 
 
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 
+import javafx.stage.FileChooser;
 import ru.metrologexpert.DDS;
 import ru.metrologexpert.Main;
 import ru.metrologexpert.lut.LutType;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 
 public class Controller {
 
@@ -88,7 +87,6 @@ public class Controller {
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 5000, F0);
         spinnerF0.setValueFactory(f0valueFactory);
 
-
         SpinnerValueFactory<Integer> fxvalueFactory =
                 new SpinnerValueFactory.IntegerSpinnerValueFactory(1, F0 / 3, Fx);
         spinnerFx.setValueFactory(fxvalueFactory);
@@ -116,6 +114,10 @@ public class Controller {
                     drawLineChart1();
                     drawLineChart2();
                 }
+        );
+
+        buttonSave.setOnAction(
+                (ActionEvent e) -> writeFile()
         );
     }
 
@@ -184,20 +186,23 @@ public class Controller {
 
     }
 
-
-    void evalErrorCapacity() {
-
-    }
-
-//    todo: bind to button
     void writeFile() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Сохранить данные модели");
+        File file = fileChooser.showSaveDialog(mainApp.getPrimaryStage());
+
         try {
             PrintWriter out = new PrintWriter(
                     new BufferedWriter(
-                            new FileWriter(FILE_NAME)));
-            for (int i = 0; i < N; i++) {
-                out.println(i);
-            }
+                            new FileWriter(file)));
+
+        for (int i = 0; i < N; i++) {
+            dds = new DDS(nPhase, nAmp, F0, i, choiceBox.getValue());
+            dds.evalU();
+            double mse = dds.getMse();
+            out.println(mse);
+        }
+
             out.close();
         } catch (IOException e) {
             System.err.print("File not created");

@@ -15,6 +15,10 @@ public class Main extends Application {
     private Controller controller;
 
 
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
