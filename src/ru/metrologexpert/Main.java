@@ -38,6 +38,8 @@ public class Main extends Application {
             controller = loader.getController();
             controller.setMainApp(this);
 
+            controller.drawLineChart0();
+            controller.drawLineChart1();
             controller.drawLineChart2();
 
             Scene scene = new Scene(rootLayout);

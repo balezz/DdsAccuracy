@@ -1,5 +1,7 @@
 package ru.metrologexpert;
 
+import ru.metrologexpert.lut.LutType;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,7 +22,7 @@ public class TestDds {
     }
 
     void printDdsSample() {
-        DDS dds = new DDS(16, 8, 4000, 100);
+        DDS dds = new DDS(16, 8, 4000, 100, LutType.SIMPLE);
         dds.evalU();
         double error = dds.getMse();
         System.out.println(Arrays.toString(dds.getU()));
@@ -29,7 +31,7 @@ public class TestDds {
 
     void evalErrorArray() {
         for(int i = 8; i <20; i++){
-            DDS dds = new DDS(i, 8, 4000, 100);
+            DDS dds = new DDS(i, 8, 4000, 100, LutType.SIMPLE);
             dds.evalU();
             errorArray[i] = dds.getMse();
         }

@@ -2,6 +2,7 @@ package ru.metrologexpert;
 
 import ru.metrologexpert.lut.LUT;
 import ru.metrologexpert.lut.LutFactory;
+import ru.metrologexpert.lut.LutType;
 
 import static java.lang.Math.*;
 
@@ -28,7 +29,7 @@ public class DDS{
     private int N_sample;
     private LUT lut;
 
-    public DDS(int nPhase, int nAmp, double fClk, double fOut) {
+    public DDS(int nPhase, int nAmp, double fClk, double fOut, LutType lutType) {
 
         phaseMax = 1 << nPhase;                 // Phase accumulator max value
         ampMax = 1 << nAmp;                     // Amplitude max value
@@ -36,7 +37,7 @@ public class DDS{
         dPhiPrec = fOut / fClk;                     // TODO: check if  fOut > fClk/2 -> oversampling
         dPhiInt = (int) round(phaseMax * (fOut / fClk));
         N_sample = (int)fClk;                   // time loop = 1 sec, so N_sample = fClk
-        lut = new LutFactory().createLUT("SimpleLUT", nPhase, nAmp);
+        lut = new LutFactory().createLUT(lutType, nPhase, nAmp);
     }
 
 
@@ -60,9 +61,9 @@ public class DDS{
         Uref = new double[N_sample];
 
         for (int i = 0; i < N_sample; i++) {
+            U[i] = lut.getValue(phiInt);
             phiInt += dPhiInt;
             phiInt %= phaseMax;
-            U[i] = lut.getValue(phiInt);
             Uref[i] = ampMax * sin(2 * PI * phiPrec);
             phiPrec += dPhiPrec;
         }

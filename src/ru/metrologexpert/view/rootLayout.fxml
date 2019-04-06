@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -23,7 +26,7 @@
             <RowConstraints maxHeight="378.0" minHeight="10.0" prefHeight="302.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <LineChart fx:id="lineChart0" title="Шум от разрядности регистров фазы">
+            <LineChart fx:id="lineChart0" title="Шум от объема памяти">
               <xAxis>
                 <NumberAxis side="BOTTOM" fx:id="xAxis0" />
               </xAxis>
@@ -52,36 +55,75 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="205.0" minHeight="10.0" prefHeight="119.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="286.0" minHeight="10.0" prefHeight="196.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="63.0" minHeight="10.0" prefHeight="63.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <GridPane GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="440.0" minWidth="10.0" prefWidth="355.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="566.0" minWidth="10.0" prefWidth="352.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="160.0" text="Сохранить" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="160.0" text="Обновить" GridPane.halignment="CENTER" />
+                        <Button fx:id="buttonSave" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="160.0" text="Сохранить" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        <Button fx:id="buttonRefresh" mnemonicParsing="false" prefHeight="40.0" prefWidth="160.0" text="Обновить" GridPane.halignment="CENTER" />
                      </children>
                   </GridPane>
-                  <Slider blockIncrement="1.0" max="32.0" maxWidth="400.0" min="8.0" minWidth="400.0" prefHeight="0.0" prefWidth="400.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="8.0" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
-                  <Label alignment="CENTER" contentDisplay="CENTER" text="Разрядность регистра фазы" textAlignment="CENTER" GridPane.halignment="CENTER">
+                  <Label text="Параметры модели" GridPane.halignment="CENTER">
                      <font>
-                        <Font size="20.0" />
+                        <Font size="22.0" />
                      </font>
                   </Label>
-                  <Label text="Разрядность регистра амплитуды" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Label>
-                  <Slider max="32.0" maxWidth="400.0" min="8.0" minWidth="400.0" prefWidth="400.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+                  <GridPane GridPane.rowIndex="1">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="367.0" minWidth="10.0" prefWidth="345.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="496.0" minWidth="10.0" prefWidth="362.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="122.0" minHeight="10.0" prefHeight="122.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="144.0" minHeight="10.0" prefHeight="109.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Slider fx:id="sliderPhase" blockIncrement="1.0" majorTickUnit="4.0" max="32.0" maxWidth="300.0" min="8.0" minWidth="300.0" minorTickCount="25" prefHeight="0.0" prefWidth="300.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="12.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Label alignment="CENTER" contentDisplay="CENTER" text="Разрядность регистра фазы" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="40.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label alignment="CENTER" text="Разрядность регистра амплитуды -" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="40.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Slider fx:id="sliderAmp" majorTickUnit="4.0" max="32.0" maxWidth="300.0" min="8.0" minWidth="300.0" minorTickCount="25" prefWidth="300.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="12.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                        <Spinner fx:id="spinnerF0" editable="true" GridPane.halignment="RIGHT" GridPane.valignment="BASELINE" />
+                        <Label text="Опорная частота, кГц" GridPane.halignment="LEFT" GridPane.valignment="TOP" />
+                        <Label text="Синтезируемая, кГц" />
+                        <Spinner fx:id="spinnerFx" editable="true" GridPane.halignment="RIGHT" />
+                        <ChoiceBox fx:id="choiceBox" prefWidth="150.0" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                        <Label text="Таблица ПЗУ" GridPane.rowIndex="1" />
+                        <Label fx:id="ampLabel" text="12" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets right="30.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label fx:id="phaseLabel" text="12" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                           <GridPane.margin>
+                              <Insets right="30.0" />
+                           </GridPane.margin>
+                        </Label>
+                     </children>
+                  </GridPane>
                </children>
             </GridPane>
          </children>
