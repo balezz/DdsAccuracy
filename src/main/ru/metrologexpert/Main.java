@@ -36,7 +36,7 @@ public class Main extends Application {
         try {
 
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("view/rootLayout.fxml"));
+            loader.setLocation(Main.class.getResource("res/rootLayout.fxml"));
             rootLayout = (AnchorPane) loader.load();
 
             controller = loader.getController();
